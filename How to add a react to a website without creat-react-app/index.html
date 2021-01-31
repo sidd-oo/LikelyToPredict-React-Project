@@ -18,8 +18,25 @@
         let root = document.getElementById("root");
         let elem = React.createElement("h1", {children:"Hello world"});
         let elemCodeText = "Hello ElemCode";
-        let elemCode = <div>{elemCodeText}</div>;
-        ReactDOM.render(elemCode,root);
+        const MyH1 = (props)=>{ 
+            return (<div>
+                        <h2>{props.name}</h2>
+                        <h1>
+                            {elemCodeText}
+                        </h1>
+                   </div>);
+        }
+        
+        console.log(<MyH1/>);
+        console.log(elem);
+
+
+        let ElemCode = ()=>{
+                       return (<div>
+                            <MyH1 name = "Siddharth Sahoo"> </MyH1>
+                       </div>);
+        }
+        ReactDOM.render(<ElemCode/>,root);
     </script>
 </body>
 </html>
