@@ -19,9 +19,21 @@ export const Image = (props) => {
         })
       );
   }
-  return (
+
+  const handleAdd = ()=>{
+      console.log("Working")
+      Images.push(
+        "https://images.unsplash.com/photo-1599239232659-097520265368?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+      );
+  }
+  return <>
     <div className ="flex justify-center">
       <ShowImage/>
     </div>
-  );
+    <div className = "flex justify-around my-5">
+        <input type="text"
+        className = "p-2 border border-gray-800 shadow rounded"/>
+        <button className = "p-2 bg-green-600 text-white" onClick = {handleAdd}>Add new</button>
+    </div>
+  </>
 };
