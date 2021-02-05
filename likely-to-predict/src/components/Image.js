@@ -1,54 +1,66 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 export const Image = (props) => {
-
-    const [Images, setImages] = useState(["https://images.unsplash.com/photo-1612288528103-edc64749d4ad?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1598333286614-13d8b1767be0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-                    "https://images.unsplash.com/photo-1598185092528-a88552ff8040?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-                    "https://images.unsplash.com/photo-1553460982-e4d8b24bfdd9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80"
-                ])
-    const [newImageURL, setNewImageURL] = useState("")
-
+  const [Images, setImages] = useState([
+    "https://images.unsplash.com/photo-1612288528103-edc64749d4ad?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1598333286614-13d8b1767be0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+    "https://images.unsplash.com/photo-1598185092528-a88552ff8040?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+    "https://images.unsplash.com/photo-1553460982-e4d8b24bfdd9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80",
+  ]);
+  const [newImageURL, setNewImageURL] = useState("");
 
   function handleRemove(index) {
     console.log("clicking");
-    setImages(Images.filter((image,ind) => ind !== index));
+    setImages(Images.filter((image, ind) => ind !== index));
+  }
+  
+  const [isHovering, setIsHovering] = useState(-1);
 
+  function handleMouseEnter(index) {
+    setIsHovering(index);
+    console.log(index)
   }
 
-  function ShowImage(){
-    return (
-        
-        Images.map((image, index) => {
-          return (
-            <div className="w-1/4 my-4 flex justify-center" key={index}>
-              <img
-                onClick={()=>handleRemove(index)}
-                src={image}
-                width="200"
-                height="150"
-                alt=""
-              />
-            </div>
-          );
-        })
+  function handleMouseLeave() {
+    setIsHovering(-1);
+  }
+
+  function ShowImage() {
+    return Images.map((image, index) => {
+      return (
+        <div
+          className="w-1/4 my-4 flex justify-center"
+          key={index}
+          onMouseLeave={handleMouseLeave}
+          onMouseEnter={() => handleMouseEnter(index)}
+        >
+          <div className="relative">
+            <i
+              className={`fas fa-times absolute right-0 cursor-pointer opacity-25 hover:opacity-100 
+    ${isHovering === index ? "" : "hidden"}`}
+              onClick={() => handleRemove(index)}
+            ></i>
+
+            <img src={image} width="150" alt="" />
+          </div>
+        </div>
       );
+    });
   }
 
   const handleAdd = () => {
-      if(newImageURL !== ""){
-          setImages([...Images, newImageURL]);    
-          setNewImageURL("")
-      }
-  }
+    if (newImageURL !== "") {
+      setImages([...Images, newImageURL]);
+      setNewImageURL("");
+    }
+  };
 
-  const handleChange = (event)=>{   
-      setNewImageURL(event.target.value);
-
-  }
+  const handleChange = (event) => {
+    setNewImageURL(event.target.value);
+  };
 
   return (
-    <div className = "justify-center">
+    <div className="justify-center">
       <div className="flex flex-wrap justify-center ">
         <ShowImage />
       </div>
@@ -63,7 +75,7 @@ export const Image = (props) => {
           />
         </div>
 
-        <div className = "">
+        <div className="">
           <button
             disabled={newImageURL === ""}
             className={`p-2 w-40 rounded text-white ml-2 ${
@@ -71,7 +83,7 @@ export const Image = (props) => {
             }`}
             onClick={handleAdd}
           >
-             Add Image
+            Add Image
           </button>
         </div>
       </div>
