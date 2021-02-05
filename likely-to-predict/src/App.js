@@ -1,6 +1,6 @@
 import React, {useState}  from "react";
 import "./assets/css/tailwind.css";
-import {Image} from "./components/Image"
+import {Images} from "./components/Images"
 
 let App = (props) => {
   const [title, setTitle] = useState("React App")
@@ -10,7 +10,7 @@ let App = (props) => {
         <div >
           {props.title} {title}
         </div>
-        <Image/>
+        <Images/>
       </div>
     </section>
   );
