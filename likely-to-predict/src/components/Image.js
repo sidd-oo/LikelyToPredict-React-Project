@@ -10,14 +10,25 @@ export const Image = (props) => {
     const [newImageURL, setNewImageURL] = useState("")
 
 
-  let count = 1;
+  function handleRemove(index) {
+    console.log("clicking");
+    setImages(Images.filter((image,ind) => ind !== index));
+
+  }
+
   function ShowImage(){
     return (
         
-        Images.map((image) => {
+        Images.map((image, index) => {
           return (
-            <div className = "w-1/3 my-4">
-              <img key={count++} src={image} width="200" height="150" alt="" />
+            <div className="w-1/4 my-4 flex justify-center" key={index}>
+              <img
+                onClick={()=>handleRemove(index)}
+                src={image}
+                width="200"
+                height="150"
+                alt=""
+              />
             </div>
           );
         })
@@ -25,7 +36,7 @@ export const Image = (props) => {
   }
 
   const handleAdd = () => {
-      if(newImageURL != ""){
+      if(newImageURL !== ""){
           setImages([...Images, newImageURL]);    
           setNewImageURL("")
       }
@@ -37,12 +48,12 @@ export const Image = (props) => {
   }
 
   return (
-    <>
-      <div className="flex flex-wrap justify-between ">
+    <div className = "justify-center">
+      <div className="flex flex-wrap justify-center ">
         <ShowImage />
       </div>
 
-      <div className="flex justify-between my-5 w-full">
+      <div className="flex justify-center my-5 w-full">
         <div className="w-full">
           <input
             type="text"
@@ -51,18 +62,19 @@ export const Image = (props) => {
             className="p-2 border border-gray-800 shadow rounded w-full"
           />
         </div>
-        <div className="w-full">
+
+        <div className = "">
           <button
             disabled={newImageURL === ""}
-            className={`p-2 text-white ml-2 ${
+            className={`p-2 w-40 rounded text-white ml-2 ${
               newImageURL !== "" ? "bg-green-600" : "bg-green-300"
             }`}
             onClick={handleAdd}
           >
-            Add new
+             Add Image
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
