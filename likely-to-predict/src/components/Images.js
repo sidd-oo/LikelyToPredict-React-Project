@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import ImageComp from './Image.js'
 
 export const Images = (props) => {
@@ -9,6 +9,12 @@ export const Images = (props) => {
     "https://images.unsplash.com/photo-1553460982-e4d8b24bfdd9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80",
   ]);
   const [newImageURL, setNewImageURL] = useState("");
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  },[])
 
   function handleRemove(index) {
     console.log("clicking");
@@ -40,6 +46,8 @@ export const Images = (props) => {
       <div className="flex justify-center my-5 w-full">
         <div className="w-full">
           <input
+            id = "inputBox"
+            ref = {inputRef}
             type="text"
             onChange={handleChange}
             value={newImageURL}
@@ -50,8 +58,8 @@ export const Images = (props) => {
         <div className="">
           <button
             disabled={newImageURL === ""}
-            className={`p-2 w-40 rounded text-white ml-2 ${
-              newImageURL !== "" ? "bg-green-600" : "bg-green-300"
+            className={`p-2 w-40 rounded text-white ml-2 
+                  ${newImageURL !== "" ? "bg-green-600" : "bg-green-300"
             }`}
             onClick={handleAdd}
           >

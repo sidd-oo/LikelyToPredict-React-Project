@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 
-export default function Image({ image, index, handleRemove}) {
-  const [isHovering, setIsHovering] = useState(-1);
+export default function Image({ image, index,  handleRemove}) {
+  const [isHovering, setIsHovering] = useState(false);
 
-  function handleMouseEnter(index) {
-    setIsHovering(index);
-    console.log(index);
+  function handleMouseEnter() {
+    setIsHovering(true);
   }
 
   function handleMouseLeave() {
-    setIsHovering(-1);
+    setIsHovering(false);
   }
 
   return (
@@ -17,12 +16,12 @@ export default function Image({ image, index, handleRemove}) {
       className="w-1/4 my-4 flex justify-center"
       key={index}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={() => handleMouseEnter(index)}
+      onMouseEnter={handleMouseEnter}
     >
       <div className="relative">
         <i
           className={`fas fa-times absolute right-0 cursor-pointer opacity-25 hover:opacity-100 
-    ${isHovering === index ? "" : "hidden"}`}
+                        ${isHovering ? "" : "hidden"}`}
           onClick={() => handleRemove(index)}
         ></i>
 
