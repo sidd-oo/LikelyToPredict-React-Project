@@ -13,7 +13,7 @@ export default function Image({ image, index,  handleRemove}) {
 
   return (
     <div
-      className="w-1/4 my-4 flex justify-center"
+      className="p-1 m-1 border flex justify-center"
       key={index}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
@@ -25,7 +25,7 @@ export default function Image({ image, index,  handleRemove}) {
           onClick={() => handleRemove(index)}
         ></i>
 
-        <img src={image} width="150" alt="" />
+        <img src={image} width="100%" alt="" />
       </div>
     </div>
   );

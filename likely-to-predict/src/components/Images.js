@@ -5,8 +5,9 @@ import useFetchImage from '../utils/hooks/useFetchImage';
 
 export const Images = (props) => {
   const [newImageURL, setNewImageURL] = useState("");
+  const [page, setpage] = useState(1)
 
-  const [images, setImages] = useFetchImage();
+  const [images, setImages] = useFetchImage(page);
 
   const inputRef = useRef(null);
 
@@ -38,7 +39,7 @@ export const Images = (props) => {
   return (
     <section>
       <div className="justify-center">
-        <div className="flex flex-wrap justify-center ">
+        <div className="gap-0" style={{ columnCount: 4 }}>
           <ShowImage />
         </div>
 
@@ -65,6 +66,13 @@ export const Images = (props) => {
             </button>
           </div>
         </div>
+        <h1
+          onClick={() => {
+            setpage(page + 1);
+          }}
+        >
+          Load More
+        </h1>
       </div>
     </section>
   );
