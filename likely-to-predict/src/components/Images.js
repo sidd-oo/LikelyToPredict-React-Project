@@ -1,29 +1,25 @@
 import React, { useState, useEffect, useRef} from "react";
 import ImageComp from "./Image.js";
-import Axios from 'axios';
+import useFetchImage from '../utils/hooks/useFetchImage';
+
+
 export const Images = (props) => {
-  const [Image, setImages] = useState([]);
   const [newImageURL, setNewImageURL] = useState("");
+
+  const [images, setImages] = useFetchImage();
 
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();
-    Axios.get(
-      `${process.env.REACT_APP_UNSPLASH_URL}client_id=${process.env.REACT_APP_UNSPLASH_KEY}`
-    ).then((res) => {
-      setImages(res.data)
-      // console.log(res.data);
-    });
   });
 
   function handleRemove(index) {
-    setImages(Image.filter((image, ind) => ind !== index));
-    console.log("I am changing state");
+    setImages([...images.slice(0, index), ...images.slice(index + 1, images.length)]);
   }
 
   function ShowImage() {
-    return Image.map((img, index) => (
+    return images.map((img, index) => (
       <ImageComp image={img.urls.regular} index={index} handleRemove={handleRemove} />
     ));
   }
