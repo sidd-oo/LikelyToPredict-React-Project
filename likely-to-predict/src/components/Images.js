@@ -7,12 +7,14 @@ export const Images = (props) => {
   const [newImageURL, setNewImageURL] = useState("");
   const [page, setpage] = useState(1)
 
-  const [images, setImages] = useFetchImage(page);
+  const [images, setImages, errors] = useFetchImage(page);
 
   const inputRef = useRef(null);
 
   useEffect(() => {
+    if(errors.length === 0){
     inputRef.current.focus();
+    }
   });
 
   function handleRemove(index) {
@@ -37,11 +39,26 @@ export const Images = (props) => {
   };
 
   return (
-    <section>
+    <>
+      {errors.length > 0 ? 
+      <div className = "flex h-screen">
+        <p class = "m-auto">{errors[0]}</p>
+      </div>
+      : 
+      <section>
       <div className="justify-center">
         <div className="gap-0" style={{ columnCount: 4 }}>
           <ShowImage />
         </div>
+      <button
+            onClick={() => {
+              setpage(page + 1);
+            }}
+          >
+            {" "}
+            Load More
+          </button>
+        
 
         <div className="flex justify-center my-5 w-full">
           <div className="w-full">
@@ -66,14 +83,8 @@ export const Images = (props) => {
             </button>
           </div>
         </div>
-        <h1
-          onClick={() => {
-            setpage(page + 1);
-          }}
-        >
-          Load More
-        </h1>
       </div>
-    </section>
+    </section>}     
+  </>       
   );
 };
