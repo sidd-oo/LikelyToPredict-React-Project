@@ -4,7 +4,7 @@ export default function useScroll() {
     const [scrollPosition, setscrollPosition] = useState(null);
     
     function handleScroll() {
-        setscrollPosition(()=>document.scrollY);
+        setscrollPosition(()=>window.scrollY);
     }
     
     useEffect(() => {

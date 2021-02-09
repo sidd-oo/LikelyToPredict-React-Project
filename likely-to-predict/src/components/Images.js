@@ -15,7 +15,6 @@ export const Images = (props) => {
     if(scrollPosition >= document.body.offsetHeight - window.innerHeight){
       setpage(page + 1);
     }
-
   },[scrollPosition]);
 
   const inputRef = useRef(null);
@@ -47,7 +46,9 @@ export const Images = (props) => {
     setNewImageURL(event.target.value);
   };
 
-  return isLoading ? (<Loading/>) : (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div>
       {errors.length > 0 ? (
         <div className="flex h-screen">
@@ -56,7 +57,7 @@ export const Images = (props) => {
       ) : (
         <section>
           <div className="justify-center">
-            <div className="flex flex-wrap" >
+            <div className="flex flex-wrap">
               <ShowImage />
             </div>
             <button
@@ -64,7 +65,6 @@ export const Images = (props) => {
                 setpage(page + 1);
               }}
             >
-
               Load More
             </button>
 
