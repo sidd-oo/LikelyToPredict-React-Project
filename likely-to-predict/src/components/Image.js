@@ -13,7 +13,7 @@ export default function Image({ image, index,  handleRemove}) {
 
   return (
     <div
-      className="p-1 m-1 border flex justify-center"
+      className="w-1/3 p-1 border flex justify-center"
       key={index}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
