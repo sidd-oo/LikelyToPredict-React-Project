@@ -22,9 +22,7 @@ export default function Image({ image, index,  handleRemove}) {
         <i
           className={`fas fa-times absolute right-0 cursor-pointer opacity-25 hover:opacity-100 
                         ${isHovering ? "" : "hidden"}`}
-          onClick={() => handleRemove(index)}
-        ></i>
-
+          onClick={() => handleRemove(index)}></i>
         <img src={image} width="100%" alt="" />
       </div>
     </div>

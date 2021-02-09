@@ -5,12 +5,12 @@ import Loading from './Loading'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export const Images = (props) => {
-  const [newImageURL, setNewImageURL] = useState("");
   const [page, setpage] = useState(1)
-
-  const [images, setImages, errors, isLoading] = useFetchImage(page);
-
+  const [inputQuery, setInputQuery] = useState("");
   const inputRef = useRef(null);
+
+  const [images, setImages, errors, isLoading] = useFetchImage({page, inputQuery});
+
 
   useEffect(() => {
     if(errors.length === 0 && isLoading === false){
@@ -31,16 +31,14 @@ export const Images = (props) => {
     );
   }
 
-  const handleAdd = () => {
-    if (newImageURL !== "") {
-      setImages([...Image, newImageURL]);
-      setNewImageURL("");
-    }
-  };
+  // const handleSearch = () => {
+    
+  // };
 
-  const handleChange = (event) => {
-    setNewImageURL(event.target.value);
-  };
+  function handleInput(e){
+    setInputQuery(e.target.value);
+    console.log(e.target.value)
+  }
 
   return (
     <div>
@@ -50,31 +48,29 @@ export const Images = (props) => {
         </div>
       ) : (
         <section>
-          <div className="justify-center">       
-              <ShowImage />
-            <div className="flex justify-center my-5 w-full">
-              <div className="w-full">
-                <input
-                  id="inputBox"
-                  ref={inputRef}
-                  type="text"
-                  onChange={handleChange}
-                  value={newImageURL}
-                  className="p-2 border border-gray-800 shadow rounded w-full"
-                />
-              </div>
-
-              <div className="">
-                <button
-                  disabled={newImageURL === ""}
-                  className={`p-2 w-40 rounded text-white ml-2 
-            ${newImageURL !== "" ? "bg-green-600" : "bg-green-300"}`}
-                  onClick={handleAdd}
-                >
-                  Add Image
-                </button>
-              </div>
+          <div className="flex justify-center my-5 w-full">
+            <div className= "w-full">
+              <input
+                type = "text"
+                ref={inputRef}
+                onChange={handleInput}
+                placeholder="Search photos here"
+                className="p-2 border border-gray-800 shadow rounded w-full"
+              />
             </div>
+{/* 
+            <div>
+              <button
+                className={`p-2 w-40 rounded text-white ml-2 bg-green-300`}
+                onClick={handleSearch}
+              >
+                Search
+              </button>
+            </div> */}
+          </div>
+
+          <div className="justify-center">
+            <ShowImage />
           </div>
         </section>
       )}
