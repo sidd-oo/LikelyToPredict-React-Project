@@ -2,20 +2,13 @@ import React, { useState, useEffect, useRef} from "react";
 import ImageComp from "./Image.js";
 import useFetchImage from '../utils/hooks/useFetchImage';
 import Loading from './Loading'
-import useScroll from "../utils/hooks/useScroll.js";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export const Images = (props) => {
   const [newImageURL, setNewImageURL] = useState("");
   const [page, setpage] = useState(1)
 
   const [images, setImages, errors, isLoading] = useFetchImage(page);
-  const scrollPosition = useScroll();
-
-  useEffect(()=>{
-    if(scrollPosition >= document.body.offsetHeight - window.innerHeight){
-      setpage(page + 1);
-    }
-  },[scrollPosition]);
 
   const inputRef = useRef(null);
 
@@ -30,9 +23,12 @@ export const Images = (props) => {
   }
 
   function ShowImage() {
-    return images.map((img, index) => (
-      <ImageComp image={img.urls.regular} index={index} handleRemove={handleRemove} />
-    ));
+    return (
+      <InfiniteScroll dataLength = {images.length} next = {()=>setpage(page + 1)} hasMore = {true}
+        className="flex flex-wrap">
+          { images.map((img, index) => <ImageComp image={img.urls.regular} index={index} handleRemove={handleRemove}/>)}
+      </InfiniteScroll>
+    );
   }
 
   const handleAdd = () => {
@@ -46,9 +42,7 @@ export const Images = (props) => {
     setNewImageURL(event.target.value);
   };
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <div>
       {errors.length > 0 ? (
         <div className="flex h-screen">
@@ -56,18 +50,8 @@ export const Images = (props) => {
         </div>
       ) : (
         <section>
-          <div className="justify-center">
-            <div className="flex flex-wrap">
+          <div className="justify-center">       
               <ShowImage />
-            </div>
-            <button
-              onClick={() => {
-                setpage(page + 1);
-              }}
-            >
-              Load More
-            </button>
-
             <div className="flex justify-center my-5 w-full">
               <div className="w-full">
                 <input
@@ -94,6 +78,7 @@ export const Images = (props) => {
           </div>
         </section>
       )}
+      {isLoading === true ? <Loading /> : null}
     </div>
   );
 };
