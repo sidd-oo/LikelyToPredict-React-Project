@@ -11,17 +11,28 @@ export default function useFetchImage({page, inputQuery}) {
 
      useEffect(() => {
         setIsLoading(true);
-        Axios.get(`${api}/search/photos?client_id=${access_key}&page=${page}&query=${inputQuery}`
+        Axios.get(`${api}/photos?client_id=${access_key}&page=${page}`
         ).then((res) => {
-          setImages([...images, ...res.data.results]);
-          setIsLoading(false);
-          console.log(`INput query${inputQuery}`);
+            setImages([...res.data])    
+            setIsLoading(false);
         }).catch(e =>{
             setErrors(e.response.data.errors);
-            console.log(e.reponse.data.errors)
             setIsLoading(false);
         })
-     }, [page,inputQuery]); 
+     }, [page]); 
+
+     useEffect(() => {
+       setIsLoading(true);
+       Axios.get(`${api}/search/photos?client_id=${access_key}&page=${page}&query=${inputQuery}`)
+         .then((res) => {
+           setImages([...images, ...res.data.results]);
+           setIsLoading(false);
+         })
+         .catch((e) => {
+           setErrors(e.response.data.errors);
+           setIsLoading(false);
+         });
+     }, [inputQuery])
 
      return [images, setImages, errors, isLoading];
 }

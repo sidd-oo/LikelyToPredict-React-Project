@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 export const Images = (props) => {
   const [page, setpage] = useState(1)
-  const [inputQuery, setInputQuery] = useState("");
+  const [inputQuery, setInputQuery] = useState(null);
   const inputRef = useRef(null);
 
   const [images, setImages, errors, isLoading] = useFetchImage({page, inputQuery});
