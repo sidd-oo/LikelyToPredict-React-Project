@@ -26,25 +26,27 @@ export const Images = (props) => {
     return (
       <InfiniteScroll dataLength = {images.length} next = {()=>setpage(page + 1)} hasMore = {true}
         className="flex flex-wrap">
-          { images.map((img, index) => <ImageComp image={img.urls.regular} index={index} handleRemove={handleRemove}/>)}
+          { images.map((img, index) => <ImageComp key = {index} image={img.urls.regular} index={index} handleRemove={handleRemove}/>)}
       </InfiniteScroll>
     );
   }
 
-  // const handleSearch = () => {
-    
-  // };
 
+  const [typingTimeout, setTypingTimeout] = useState("")
   function handleInput(e){
-    setInputQuery(e.target.value);
-    console.log(e.target.value)
+    const text = e.target.value;
+    clearTimeout(typingTimeout);
+    const timeout = setTimeout(()=>{
+      setInputQuery(text);
+    }, 100)
+    setTypingTimeout(timeout);
   }
 
   return (
     <div>
       {errors.length > 0 ? (
         <div className="flex h-screen">
-          <p class="m-auto">{errors[0]}</p>
+          <p className="m-auto">{errors[0]}</p>
         </div>
       ) : (
         <section>
@@ -58,15 +60,7 @@ export const Images = (props) => {
                 className="p-2 border border-gray-800 shadow rounded w-full"
               />
             </div>
-{/* 
-            <div>
-              <button
-                className={`p-2 w-40 rounded text-white ml-2 bg-green-300`}
-                onClick={handleSearch}
-              >
-                Search
-              </button>
-            </div> */}
+            
           </div>
 
           <div className="justify-center">

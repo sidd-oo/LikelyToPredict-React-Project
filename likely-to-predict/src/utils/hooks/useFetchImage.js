@@ -25,7 +25,7 @@ export default function useFetchImage({page, inputQuery}) {
        setIsLoading(true);
        Axios.get(`${api}/search/photos?client_id=${access_key}&page=${page}&query=${inputQuery}`)
          .then((res) => {
-           setImages([...images, ...res.data.results]);
+           setImages([...res.data.results]);
            setIsLoading(false);
          })
          .catch((e) => {
