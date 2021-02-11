@@ -10,8 +10,9 @@ let App = (props) => {
       <Router>
         <Header/>
         <Switch>
-          {routes.map((route) => (
+          {routes.map((route, index) => (
             <Route
+              key = {index}
               path={route.path}
               exact={route.exact}
               component={route.component}
