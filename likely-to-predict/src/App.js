@@ -1,26 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./assets/css/tailwind.css";
-import Gallery from "./pages/Gallery";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import routes from "./utils/routes";
+
+
 
 let App = (props) => {
   return (
     <>
       <Router>
         <Switch>
-          <Route path="/" exact = {true}>
-            <Home />
-          </Route>
-
-          <Route path="/login">
-            <Login/>
-          </Route>
-
-          <Route path="/gallery">
-            <Gallery/>
-          </Route>
+          { routes.map((route)=>(
+              <Route path = {route.path} exact = {route.exact} component = {route.component}/>
+            ))}
         </Switch>
       </Router>
     </>
