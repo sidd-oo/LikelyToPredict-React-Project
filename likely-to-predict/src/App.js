@@ -1,16 +1,29 @@
-import React  from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./assets/css/tailwind.css";
-import {Images} from "./components/Images"
+import Gallery from "./pages/Gallery";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 
 let App = (props) => {
   return (
-    <section className="flex flex-wrap justify-center">
-      <div className="w-10/12 text-center">
-        <div >
-        </div>
-        <Images/>
-      </div>
-    </section>
+    <>
+      <Router>
+        <Switch>
+          <Route path="/" exact = {true}>
+            <Home />
+          </Route>
+
+          <Route path="/login">
+            <Login/>
+          </Route>
+
+          <Route path="/gallery">
+            <Gallery/>
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 };
 
