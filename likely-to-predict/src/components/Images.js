@@ -3,6 +3,7 @@ import ImageComp from "./Image.js";
 import useFetchImage from '../utils/hooks/useFetchImage';
 import Loading from './Loading'
 import InfiniteScroll from "react-infinite-scroll-component";
+import useDebounce from "../utils/hooks/useDebounce.js";
 
 export const Images = (props) => {
   const [page, setpage] = useState(1)
@@ -31,15 +32,11 @@ export const Images = (props) => {
     );
   }
 
-
-  const [typingTimeout, setTypingTimeout] = useState("")
+  const debounce = useDebounce();
+  
   function handleInput(e){
     const text = e.target.value;
-    clearTimeout(typingTimeout);
-    const timeout = setTimeout(()=>{
-      setInputQuery(text);
-    }, 100)
-    setTypingTimeout(timeout);
+    debounce(()=>setInputQuery(text));
   }
 
   return (

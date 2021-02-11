@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import { useState , useEffect } from 'react'
 
+// https://api.unsplash.com/search/photos?page=1&query=office
+
 const api = process.env.REACT_APP_UNSPLASH_API;
 const access_key = process.env.REACT_APP_UNSPLASH_KEY;
 
@@ -11,9 +13,9 @@ export default function useFetchImage({page, inputQuery}) {
 
      useEffect(() => {
         setIsLoading(true);
-        Axios.get(`${api}/photos?client_id=${access_key}&page=${page}`
+        Axios.get(`${api}photos?client_id=${access_key}&page=${page}`
         ).then((res) => {
-            setImages([...res.data])    
+            setImages([...res.data,...images])    
             setIsLoading(false);
         }).catch(e =>{
             setErrors(e.response.data.errors);
@@ -22,8 +24,11 @@ export default function useFetchImage({page, inputQuery}) {
      }, [page]); 
 
      useEffect(() => {
+       if(inputQuery === null){
+          return;
+       }
        setIsLoading(true);
-       Axios.get(`${api}/search/photos?client_id=${access_key}&page=${page}&query=${inputQuery}`)
+       Axios.get(`${api}search/photos?client_id=${access_key}&page=${page}&query=${inputQuery}`)
          .then((res) => {
            setImages([...res.data.results]);
            setIsLoading(false);
