@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 import firebase from "../config/firebase";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({email:"", password:""});
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
 
   function handleSubmitForm(e) {
     if(isLoading) return;
@@ -16,6 +19,8 @@ export default function Login() {
       .then((userCredential) => {
         // Signed in
         setIsLoading(false);
+        history.replace("/");
+        // setIsLoggedIn(true);
         console.log(userCredential);
         setError("");
       }).catch(err =>{
@@ -28,6 +33,8 @@ export default function Login() {
     setForm({...form,[e.target.name]:e.target.value})
     console.log(e.target.value, e.target.name)
   }
+
+  // if(isLoggedIn) return <Redirect to = "/"/>
 
   return (
     <div className="flex h-screen bg-gray-200">
